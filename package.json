@@ -1,0 +1,15 @@
+{
+  "name": "tonic-ssr",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@optoolco/tonic": "^13.1.4",
+    "parse5": "^6.0.1"
+  }
+}
