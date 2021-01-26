@@ -1,10 +1,9 @@
 const parse = require('parse5')
 
-const registry = {}
-global.document = {}
-
 // eslint-disable-next-line
 global.root = { toString () {} }
+const registry = {}
+global.document = {}
 
 global.window = {
   HTMLElement: class {
@@ -12,38 +11,41 @@ global.window = {
       this.children = []
       this.childNodes = []
       this.attributes = []
-      this.id = this._id = 'root'
+      this.id = this._id = 'ssr'
+      this.elementName = this.constructor.name
     }
 
     getRootNode () {
-      return {}
+      return this
     }
 
     disabledClientSideCallbacks () {
+      this.willConnect = () => {}
       this.connected = () => {}
       this.updatedd = () => {}
       this.disconnected = () => {}
     }
 
-    initElements () {
-      const elements = this.querySelectorAll(Tonic._tags)
+    async visit (node) {
+      const Component = registry[node.tagName]
 
-      for (const element of elements) {
-        const Component = registry[element.tagName]
-
+      if (Component) {
         const c = new Component()
         c.disabledClientSideCallbacks()
-        c.attributes = element.attrs
-
-        c.willConnect = () => {
-          c.initElements()
-          c._set(c.root, c.render)
-        }
-
+        c.attributes = node.attrs
         c.connectedCallback()
 
-        const frag = parse.parseFragment(c.innerHTML)
-        element.childNodes.push(...frag.childNodes)
+        if (c.stylesheet && !Tonic._stylesheetRegistry[node.tagName]) {
+          Tonic._stylesheetRegistry[node.tagName] = c.stylesheet()
+        }
+
+        const t = await c.render()
+        const frag = parse.parseFragment(t.rawText)
+        node.childNodes.push(...frag.childNodes)
+      }
+
+      for (const child of node.childNodes) {
+        if (child.childNodes) await this.visit(child)
       }
     }
 
@@ -65,18 +67,24 @@ global.window = {
       return elements
     }
 
-    preRender () {
-      const t = this.render()
+    async preRender () {
+      const t = await this.render()
       Object.assign(this, parse.parseFragment(t.rawText))
 
       this.disabledClientSideCallbacks()
 
-      this.willConnect = () => {
-        this.initElements()
-        this._set(this.root, this.render)
+      this.connectedCallback()
+      await this._set(this.root, this.render)
+
+      const nodes = this.querySelectorAll(Tonic._tags)
+
+      for (const node of nodes) {
+        await this.visit(node)
       }
 
-      this.connectedCallback()
+      const styles = Object.values(Tonic._stylesheetRegistry).join('\n')
+      const styleNode = parse.parseFragment(`<style>${styles}</style>`)
+      this.childNodes.unshift(styleNode.childNodes[0])
 
       return parse.serialize(this)
     }

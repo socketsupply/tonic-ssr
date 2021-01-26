@@ -1,36 +1,119 @@
 const Tonic = require('.')
+const assert = require('assert')
 
-class HelloWorld extends Tonic {
+const sleep = t => new Promise(resolve => setTimeout(resolve, t))
+
+class TimeStamp extends Tonic {
   render () {
     return this.html`
+      <time>
+        Tue Jan 26 22:18:05 CET 2021
+      </time>
+    `
+  }
+}
+
+class HelloWorld extends Tonic {
+  stylesheet () {
+    return `
+      hello-world {
+        border: ${this.props.border};
+      }
+    `
+  }
+
+  async click () {
+    //
+    // Won't do anything on the server,
+    // will work if rendered in the browser.
+    //
+  }
+
+  async render () {
+    await sleep(200)
+
+    const {
+      greetings,
+      lang
+    } = this.props
+
+    return this.html`
       <h1>
-        ${JSON.stringify(this.props.greetings[this.props.lang])}
+        ${greetings[lang]}
+        <time-stamp></time-stamp>
       </h1>
     `
   }
 }
 
 class MainComponent extends Tonic {
+  constructor (props) {
+    super()
+    this.props = props
+  }
+
   render () {
     const greetings = { en: 'Hello' }
 
     return this.html`
       <header>
-        Example
+        ${String(this.props.timestamp)}
       </header>
+
       <main>
-        <hello-world id="hello" lang="en" greetings="${greetings}">
+        <hello-world
+          id="hello"
+          lang="en"
+          border="1px solid red"
+          greetings="${greetings}"
+        >
         </hello-world>
       </main>
+
       <footer>
       </footer>
     `
   }
 }
 
+Tonic.add(TimeStamp)
 Tonic.add(HelloWorld)
 Tonic.add(MainComponent)
 
-const c = new MainComponent()
+const c = new MainComponent({
+  timestamp: 1611695921286
+})
 
-console.log(c.preRender())
+async function main () {
+  const expected = `<style>
+      hello-world {
+        border: 1px solid red;
+      }
+    </style>
+      <header>
+        1611695921286
+      </header>
+
+      <main>
+        <hello-world id="hello" lang="en" border="1px solid red" greetings="__ssr__tonic0__">
+        
+      <h1>
+        Hello
+        <time-stamp>
+      <time>
+        Tue Jan 26 22:18:05 CET 2021
+      </time>
+    </time-stamp>
+      </h1>
+    </hello-world>
+      </main>
+
+      <footer>
+      </footer>`
+
+  const actual = await c.preRender()
+
+  assert(actual.trim() === expected.trim())
+}
+
+main()
