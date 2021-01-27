@@ -1,7 +1,7 @@
 {
   "name": "tonic-ssr",
   "version": "1.0.0",
-  "description": "",
+  "description": "server side rendering for tonic components",
   "main": "index.js",
   "scripts": {
     "test": "node test.js"
@@ -11,5 +11,17 @@
   "dependencies": {
     "@optoolco/tonic": "^13.1.4",
     "parse5": "^6.0.1"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/optoolco/tonic-ssr.git"
+  },
+  "bugs": {
+    "url": "https://github.com/optoolco/tonic-ssr/issues"
+  },
+  "homepage": "https://github.com/optoolco/tonic-ssr#readme"
 }
