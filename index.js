@@ -69,7 +69,7 @@ global.window = {
 
     async preRender () {
       const t = await this.render()
-      Object.assign(this, parse.parseFragment(t.rawText))
+      Object.assign(this, parse.parse(t.rawText))
 
       this.disabledClientSideCallbacks()
 
@@ -84,7 +84,11 @@ global.window = {
 
       const styles = Object.values(Tonic._stylesheetRegistry).join('\n')
       const styleNode = parse.parseFragment(`<style>${styles}</style>`)
-      this.childNodes.unshift(styleNode.childNodes[0])
+      const head = this.querySelectorAll('head')[0]
+
+      if (head) {
+        head.childNodes.unshift(styleNode.childNodes[0])
+      }
 
       return parse.serialize(this)
     }

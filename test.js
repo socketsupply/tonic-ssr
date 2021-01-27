@@ -85,18 +85,17 @@ const c = new MainComponent({
 })
 
 async function main () {
-  const expected = `<style>
+  const expected = `<html><head><style>
       hello-world {
         border: 1px solid red;
       }
-    </style>
-      <header>
+    </style></head><body><header>
         1611695921286
       </header>
 
       <main>
         <hello-world id="hello" lang="en" border="1px solid red" greetings="__ssr__tonic0__">
-        
+
       <h1>
         Hello
         <time-stamp>
@@ -109,11 +108,15 @@ async function main () {
       </main>
 
       <footer>
-      </footer>`
+      </footer>
+    </body></html>`
 
   const actual = await c.preRender()
 
-  assert(actual.trim() === expected.trim())
+  assert(
+    actual.replace(/\s\s+/g, ' ') ===
+      expected.replace(/\s\s+/g, ' ')
+  )
 }
 
 main()
