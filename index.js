@@ -74,7 +74,6 @@ global.window = {
       this.disabledClientSideCallbacks()
 
       this.connectedCallback()
-      await this._set(this.root, this.render)
 
       const nodes = this.querySelectorAll(Tonic._tags)
 
