@@ -31,6 +31,7 @@ global.window = {
 
       if (Component) {
         const c = new Component()
+        c.node = node
         c.disabledClientSideCallbacks()
         c.attributes = node.attrs
         c.connectedCallback()
