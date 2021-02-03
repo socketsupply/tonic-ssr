@@ -101,5 +101,6 @@ global.window = {
 }
 
 const Tonic = require('@optoolco/tonic')
+Tonic.ssr = true
 
 module.exports = Tonic
