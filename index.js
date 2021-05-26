@@ -22,7 +22,7 @@ global.window = {
     disabledClientSideCallbacks () {
       this.willConnect = () => {}
       this.connected = () => {}
-      this.updatedd = () => {}
+      this.updated = () => {}
       this.disconnected = () => {}
     }
 
