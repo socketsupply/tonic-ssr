@@ -1,6 +1,6 @@
 {
   "name": "tonic-ssr",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "server side rendering for tonic components",
   "main": "index.js",
   "scripts": {
