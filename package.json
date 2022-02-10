@@ -9,19 +9,18 @@
   "author": "heapwolf",
   "license": "ISC",
   "dependencies": {
-    "@optoolco/tonic": "^13.1.4",
+    "@socketsupply/tonic": "14.1.0",
     "parse5": "^6.0.1"
   },
   "directories": {
     "test": "test"
   },
-  "devDependencies": {},
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/optoolco/tonic-ssr.git"
+    "url": "git+https://github.com/socketsupply/tonic-ssr.git"
   },
   "bugs": {
-    "url": "https://github.com/optoolco/tonic-ssr/issues"
+    "url": "https://github.com/socketsupply/tonic-ssr/issues"
   },
-  "homepage": "https://github.com/optoolco/tonic-ssr#readme"
+  "homepage": "https://github.com/socketsupply/tonic-ssr#readme"
 }
