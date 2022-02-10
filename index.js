@@ -100,7 +100,7 @@ global.window = {
   customEvent: () => {}
 }
 
-const Tonic = require('@optoolco/tonic')
+const Tonic = require('@socketsupply/tonic')
 Tonic.ssr = true
 Tonic.cache = {}
 
