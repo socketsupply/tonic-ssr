@@ -3,14 +3,18 @@
   "version": "1.2.1",
   "description": "server side rendering for tonic components",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "node test.js"
+    "test": "run-s test:*",
+    "test:standard": "standard",
+    "test:node-test": "c8 node --test --test-reporter spec"
   },
   "author": "heapwolf",
   "license": "ISC",
   "dependencies": {
-    "@socketsupply/tonic": "14.1.0",
-    "parse5": "^6.0.1"
+    "@socketsupply/tonic": "^15.0.0",
+    "npm-run-all2": "^6.0.6",
+    "parse5": "^7.0.0"
   },
   "directories": {
     "test": "test"
@@ -22,5 +26,9 @@
   "bugs": {
     "url": "https://github.com/socketsupply/tonic-ssr/issues"
   },
-  "homepage": "https://github.com/socketsupply/tonic-ssr#readme"
+  "homepage": "https://github.com/socketsupply/tonic-ssr#readme",
+  "devDependencies": {
+    "c8": "^8.0.1",
+    "standard": "^17.1.0"
+  }
 }
