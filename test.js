@@ -1,5 +1,6 @@
-const Tonic = require('.')
-const assert = require('assert')
+import test from 'node:test'
+import assert from 'node:assert'
+import { Tonic } from './index.js'
 
 const sleep = t => new Promise(resolve => setTimeout(resolve, t))
 
@@ -84,7 +85,7 @@ const c = new MainComponent({
   timestamp: 1611695921286
 })
 
-async function main () {
+test('Simple ssr rendering', async (t) => {
   const expected = `<html><head><style>
       hello-world {
         border: 1px solid red;
@@ -110,13 +111,11 @@ async function main () {
       <footer>
       </footer>
     </body></html>`
-
   const actual = await c.preRender()
 
-  assert(
-    actual.replace(/\s\s+/g, ' ') ===
-      expected.replace(/\s\s+/g, ' ')
+  assert.strictEqual(
+    actual.replace(/\s\s+/g, ' '),
+    expected.replace(/\s\s+/g, ' '),
+    'Renders correctly'
   )
-}
-
-main()
+})

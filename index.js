@@ -1,4 +1,4 @@
-const parse = require('parse5')
+import * as parse from 'parse5'
 
 // eslint-disable-next-line
 global.root = { toString () {} }
@@ -100,8 +100,10 @@ global.window = {
   customEvent: () => {}
 }
 
-const Tonic = require('@socketsupply/tonic')
+const { Tonic } = await import('@socketsupply/tonic')
+
 Tonic.ssr = true
 Tonic.cache = {}
 
-module.exports = Tonic
+export default Tonic
+export { Tonic }
