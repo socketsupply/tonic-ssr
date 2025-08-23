@@ -14,7 +14,7 @@
   "dependencies": {
     "@socketsupply/tonic": "^15.0.0",
     "npm-run-all2": "^6.0.6",
-    "parse5": "^7.0.0"
+    "parse5": "^8.0.0"
   },
   "directories": {
     "test": "test"
