@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "@socketsupply/tonic": "^15.0.0",
-    "npm-run-all2": "^6.0.6",
+    "npm-run-all2": "^8.0.4",
     "parse5": "^7.0.0"
   },
   "directories": {
